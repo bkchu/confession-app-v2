@@ -4,16 +4,18 @@ import { withRouter } from "react-router-dom";
 import cx from "classnames";
 
 import {
+  closeSideDrawer,
   openSideDrawer,
   setScrollStatus,
   setIsScrollingDown,
   setVersion,
 } from "../../redux/reducer";
 import { ReactComponent as BurgerMenu } from "../../assets/svgs/burger-menu.svg";
-import { ReactComponent as ConfessionLogo } from "../../assets/svgs/logo_transparent.svg";
+import { ReactComponent as ConfessionLogo } from "../../assets/svgs/logo_without-text.svg";
 
 import styles from "./header.module.scss";
 import { VERSIONS } from "../../services/verse-parser";
+import ClickAwayListener from "@mui/base/ClickAwayListener";
 
 const delta = 10; //how far it needs to be scrolled to be considered changed
 const navbarHeight = 45; //height of navbar
@@ -45,10 +47,14 @@ class Header extends Component {
     }, 250);
   }
 
+  onOutsideClick = () => {
+    this.setState({ isVersionSelectorOpen: false });
+  };
+
   onOpenVersionSelector = () => {
-    this.setState(({ isVersionSelectorOpen }) => ({
-      isVersionSelectorOpen: !isVersionSelectorOpen,
-    }));
+    this.setState({
+      isVersionSelectorOpen: true,
+    });
   };
 
   onVersionSelect = (version) => {
@@ -58,7 +64,9 @@ class Header extends Component {
 
   render() {
     const {
+      closeSideDrawer,
       openSideDrawer,
+      showSideDrawer,
       isScrollingDown,
       version,
       location,
@@ -86,7 +94,7 @@ class Header extends Component {
               onClick={() => history.push("/")}
               className={styles.header__brandname}
             >
-              CONFESS
+              Confession
             </h1>
             <button
               onClick={this.onOpenVersionSelector}
@@ -95,23 +103,32 @@ class Header extends Component {
               {version}
             </button>
           </div>
-          <BurgerMenu style={{ cursor: "pointer" }} onClick={openSideDrawer} />
+          <BurgerMenu
+            style={{ cursor: "pointer" }}
+            onClick={showSideDrawer ? closeSideDrawer : openSideDrawer}
+          />
         </nav>
-        <div
-          className={cx(styles["header__version-selector"], {
-            [styles["header__version-selector--shown"]]: isVersionSelectorOpen,
-          })}
-        >
-          {Object.keys(VERSIONS).map((version) => (
-            <button
-              key={version}
-              onClick={() => this.onVersionSelect(version)}
-              className={styles["header__version"]}
+
+        {isVersionSelectorOpen && (
+          <ClickAwayListener onClickAway={this.onOutsideClick}>
+            <div
+              className={cx(styles["header__version-selector"], {
+                [styles["header__version-selector--shown"]]:
+                  isVersionSelectorOpen,
+              })}
             >
-              {version}
-            </button>
-          ))}
-        </div>
+              {Object.keys(VERSIONS).map((version) => (
+                <button
+                  key={version}
+                  onClick={() => this.onVersionSelect(version)}
+                  className={styles["header__version"]}
+                >
+                  {version}
+                </button>
+              ))}
+            </div>
+          </ClickAwayListener>
+        )}
       </>
     );
   }
@@ -119,6 +136,7 @@ class Header extends Component {
 
 const mapStateToProps = (state) => {
   return {
+    showSideDrawer: state.showSideDrawer,
     didScroll: state.didScroll,
     isScrollingDown: state.isScrollingDown,
     version: state.version,
@@ -126,8 +144,11 @@ const mapStateToProps = (state) => {
 };
 
 export default withRouter(
-  connect(
-    mapStateToProps,
-    { openSideDrawer, setScrollStatus, setIsScrollingDown, setVersion }
-  )(Header)
+  connect(mapStateToProps, {
+    openSideDrawer,
+    closeSideDrawer,
+    setScrollStatus,
+    setIsScrollingDown,
+    setVersion,
+  })(Header)
 );

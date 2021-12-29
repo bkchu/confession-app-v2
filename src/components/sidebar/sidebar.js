@@ -1,14 +1,14 @@
-import React, { Component, Fragment } from 'react';
-import { NavLink } from 'react-router-dom';
-import { connect } from 'react-redux';
-import cx from 'classnames';
+import React, { Component, Fragment } from "react";
+import { NavLink } from "react-router-dom";
+import { connect } from "react-redux";
+import cx from "classnames";
 
-import { closeSideDrawer } from '../../redux/reducer';
+import { closeSideDrawer } from "../../redux/reducer";
 
-import styles from './sidebar.module.scss';
-import confession from '../../services/confession';
-import { ReactComponent as BurgerCollapse } from '../../assets/svgs/burger-menu-collapse.svg';
-import { getPathFromTitle } from '../../services/pathConversion';
+import styles from "./sidebar.module.scss";
+import confession from "../../services/confession";
+import { ReactComponent as BurgerCollapse } from "../../assets/svgs/burger-menu-collapse.svg";
+import { getPathFromTitle } from "../../services/pathConversion";
 
 class Sidebar extends Component {
   constructor() {
@@ -23,24 +23,24 @@ class Sidebar extends Component {
     });
   }
 
-  page = obj => (
+  page = (obj) => (
     <NavLink
       activeClassName={cx(
         styles.sidebar__item,
-        styles['sidebar__item--active']
+        styles["sidebar__item--active"]
       )}
       to={`/part/${obj.part}/page/${getPathFromTitle(obj.content)}`}
       onClick={() => this.props.closeSideDrawer()}
       key={obj.content}
-      className={cx(styles.sidebar__item, styles['sidebar__item--page'])}
+      className={cx(styles.sidebar__item, styles["sidebar__item--page"])}
     >
       {obj.content}
     </NavLink>
   );
-  part = obj => (
+  part = (obj) => (
     <h3
       key={obj.content}
-      className={cx(styles.sidebar__item, styles['sidebar__item--part'])}
+      className={cx(styles.sidebar__item, styles["sidebar__item--part"])}
     >
       {obj.content}
     </h3>
@@ -49,46 +49,52 @@ class Sidebar extends Component {
   render() {
     const { closeSideDrawer, isOpen } = this.props;
 
-    const contents = confession.table_of_contents.map(
-      item => (item.type === 'PAGE' ? this.page(item) : this.part(item))
+    const contents = confession.table_of_contents.map((item) =>
+      item.type === "PAGE" ? this.page(item) : this.part(item)
     );
 
-    const sidebarBackgroundClassName = cx(styles['sidebar-background'], {
-      [styles['sidebar-background--hidden']]: !isOpen
+    const sidebarBackgroundClassName = cx(styles["sidebar-background"], {
+      [styles["sidebar-background--hidden"]]: !isOpen,
     });
-    const sidebarClassName = cx(styles['sidebar'], {
-      [styles['sidebar--hidden']]: !isOpen
+    const sidebarClassName = cx(styles["sidebar"], {
+      [styles["sidebar--hidden"]]: !isOpen,
     });
 
     return (
       <Fragment>
-        <div
-          onClick={() => closeSideDrawer()}
-          className={sidebarBackgroundClassName}
-        />
+        <div onClick={closeSideDrawer} className={sidebarBackgroundClassName} />
         <div ref={this.sidebarDiv} className={sidebarClassName}>
-          <div className={styles['sidebar__title-container']}>
+          <div className={styles["sidebar__title-container"]}>
             <h1 className={styles.sidebar__title}>Pages</h1>
             <BurgerCollapse
-              style={{ cursor: 'pointer' }}
-              onClick={() => closeSideDrawer()}
+              style={{ cursor: "pointer", fill: "#cdd4cd" }}
+              onClick={closeSideDrawer}
             />
           </div>
           <div className={styles.sidebar__container}>{contents}</div>
-          <div className={styles['sidebar__footer']}>©2018 Brandon Chung</div>
+          <div className={styles["sidebar__footer"]}>
+            <span>©2021 NCTC</span>
+            <span>
+              Made with ❤️ by{" "}
+              <a
+                href="http://www.bkchu.dev"
+                rel="noreferrer noopener"
+                target="_blank"
+              >
+                bkchu
+              </a>
+            </span>
+          </div>
         </div>
       </Fragment>
     );
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    isOpen: state.showSideDrawer
+    isOpen: state.showSideDrawer,
   };
 };
 
-export default connect(
-  mapStateToProps,
-  { closeSideDrawer }
-)(Sidebar);
+export default connect(mapStateToProps, { closeSideDrawer })(Sidebar);
