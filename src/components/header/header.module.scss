@@ -52,7 +52,6 @@
   }
 
   &__version-selector-btn {
-    margin-left: 1rem;
     padding: 1rem;
     border: solid 2px $black;
     font-family: Montserrat;
@@ -67,12 +66,15 @@
 
     &:disabled {
       pointer-events: none;
+      touch-action: none;
     }
   }
 
   &__version-selector {
     background: $light-green;
+    box-shadow: 0 3px 4px 0 rgba(50, 50, 50, 0.5);
     position: absolute;
+    top: 0;
     left: 0;
     right: 0;
     font-size: 3rem;

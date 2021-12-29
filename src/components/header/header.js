@@ -100,34 +100,33 @@ class Header extends Component {
           >
             {version}
           </button>
+          {isVersionSelectorOpen && (
+            <ClickAwayListener touchEvent={false} onClickAway={this.onOutsideClick}>
+              <div
+                className={cx(styles["header__version-selector"], {
+                  [styles["header__version-selector--shown"]]:
+                    isVersionSelectorOpen,
+                })}
+              >
+                {Object.keys(VERSIONS).map((v) => (
+                  <button
+                    key={v}
+                    onClick={() => this.onVersionSelect(v)}
+                    className={cx(styles["header__version"], {
+                      [styles["header__version--selected"]]: v === version,
+                    })}
+                  >
+                    {v}
+                  </button>
+                ))}
+              </div>
+            </ClickAwayListener>
+          )}
           <BurgerMenu
             style={{ cursor: "pointer" }}
             onClick={showSideDrawer ? closeSideDrawer : openSideDrawer}
           />
         </nav>
-
-        {isVersionSelectorOpen && (
-          <ClickAwayListener onClickAway={this.onOutsideClick}>
-            <div
-              className={cx(styles["header__version-selector"], {
-                [styles["header__version-selector--shown"]]:
-                  isVersionSelectorOpen,
-              })}
-            >
-              {Object.keys(VERSIONS).map((v) => (
-                <button
-                  key={v}
-                  onClick={() => this.onVersionSelect(v)}
-                  className={cx(styles["header__version"], {
-                    [styles["header__version--selected"]]: v === version,
-                  })}
-                >
-                  {v}
-                </button>
-              ))}
-            </div>
-          </ClickAwayListener>
-        )}
       </>
     );
   }
