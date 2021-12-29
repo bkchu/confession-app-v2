@@ -1,4 +1,4 @@
-export default {
+const abbreviations = {
   Genesis: 'gen',
   Exodus: 'exo',
   Leviticus: 'lev',
@@ -66,3 +66,5 @@ export default {
   Jude: 'jud',
   Revelation: 'rev'
 };
+
+export default abbreviations;
