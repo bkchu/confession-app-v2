@@ -31,6 +31,7 @@
   }
 
   &__logo {
+    width: 50px;
     height: calc(#{$navbarHeight} - 1.25rem);
     margin-right: 1rem;
     fill: $black;
