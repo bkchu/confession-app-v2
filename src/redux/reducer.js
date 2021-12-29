@@ -10,7 +10,7 @@ const initialState = {
   showSideDrawer: false,
   didScroll: false,
   isScrollingDown: false,
-  version: "NKJV",
+  version: localStorage.getItem("version") ?? "NKJV",
 };
 export default function reducer(state = initialState, action) {
   switch (action.type) {
@@ -27,6 +27,7 @@ export default function reducer(state = initialState, action) {
       return { ...state, isScrollingDown: action.payload };
 
     case SET_VERSION:
+      localStorage.setItem("version", action.payload);
       return {
         ...state,
         version: action.payload,
