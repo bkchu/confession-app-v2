@@ -52,10 +52,10 @@
 
   &__container {
     width: 100%;
+    min-height: calc(100% - $navbarHeight - 75px);
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    justify-content: center;
     overflow-y: scroll;
     padding-top: 1rem;
 
