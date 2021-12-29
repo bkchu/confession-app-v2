@@ -12,7 +12,7 @@ class Landing extends Component {
       <div className={styles.landing}>
         <Logo className={styles.landing__logo} />
         <h1 className={styles.landing__title}>
-          New Creation Confessions
+          Confessions
         </h1>
         <p className={styles.landing__quote}>
           “Death and life are in the power of the tongue.”

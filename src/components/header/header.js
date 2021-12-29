@@ -51,7 +51,9 @@ class Header extends Component {
     this.setState({ isVersionSelectorOpen: false });
   };
 
-  onOpenVersionSelector = () => {
+  onToggleVersionSelection = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
     this.setState({
       isVersionSelectorOpen: true,
     });
@@ -90,19 +92,14 @@ class Header extends Component {
               onClick={() => history.push("/")}
               className={styles["header__logo"]}
             />
-            <h1
-              onClick={() => history.push("/")}
-              className={styles.header__brandname}
-            >
-              Confession
-            </h1>
-            <button
-              onClick={this.onOpenVersionSelector}
-              className={styles["header__version-selector-btn"]}
-            >
-              {version}
-            </button>
           </div>
+          <button
+            disabled={isVersionSelectorOpen}
+            onClick={this.onToggleVersionSelection}
+            className={styles["header__version-selector-btn"]}
+          >
+            {version}
+          </button>
           <BurgerMenu
             style={{ cursor: "pointer" }}
             onClick={showSideDrawer ? closeSideDrawer : openSideDrawer}
@@ -117,13 +114,15 @@ class Header extends Component {
                   isVersionSelectorOpen,
               })}
             >
-              {Object.keys(VERSIONS).map((version) => (
+              {Object.keys(VERSIONS).map((v) => (
                 <button
-                  key={version}
-                  onClick={() => this.onVersionSelect(version)}
-                  className={styles["header__version"]}
+                  key={v}
+                  onClick={() => this.onVersionSelect(v)}
+                  className={cx(styles["header__version"], {
+                    [styles["header__version--selected"]]: v === version,
+                  })}
                 >
-                  {version}
+                  {v}
                 </button>
               ))}
             </div>
