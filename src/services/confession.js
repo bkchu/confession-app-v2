@@ -7,7 +7,7 @@ const paragraph = 'PARAGRAPH';
 const verse = 'PARAGRAPH'; //for now, we will treat every verse as a paragraph
 // const verse = 'VERSE'; //delete the line above and uncomment this line for when markdown verses are used
 
-export default {
+const confession = {
   getPage(part, page) {
     return this.parts[`part_${part}`].pages[page.replace(/-/g, '_')];
   },
@@ -2240,3 +2240,5 @@ export default {
     }
   }
 };
+
+export default confession;
