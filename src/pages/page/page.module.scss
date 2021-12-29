@@ -1,0 +1,76 @@
+@import '../../sass/colors';
+
+.page {
+  $self: &;
+  padding: 1.25rem 1.25rem 45vh;
+  background-color: $white;
+  max-width: 480px;
+  margin: 0 auto;
+  &__title {
+    font-family: Vollkorn;
+    font-size: 3rem;
+    font-weight: bold;
+    line-height: 1.13;
+    color: $black;
+    margin-top: 1.25rem;
+  }
+
+  &__paragraph {
+    font-family: Vollkorn;
+    font-size: 2rem;
+    line-height: 1.5;
+    margin-top: 1.25rem;
+    a.bible-verse {
+      text-decoration: none;
+    }
+    white-space: pre-line;
+  }
+
+  &__verse {
+    font-family: Vollkorn;
+    font-size: 2rem;
+    line-height: 1.5;
+    color: $black;
+    margin-top: 1.25rem;
+  }
+
+  &__subtitle {
+    font-family: Vollkorn;
+    font-size: 2rem;
+    font-weight: bold;
+    letter-spacing: 1px;
+    color: $black;
+    text-transform: capitalize;
+    margin-top: 1.25rem;
+  }
+
+  &__subtitle--2 {
+    font-family: Vollkorn;
+    font-size: 1.875rem;
+    color: $black;
+    text-transform: capitalize;
+    font-style: italic;
+    margin-top: 1.25rem;
+  }
+
+  &__footer {
+    text-align: center;
+
+    button {
+      margin-top: 4rem;
+      border: solid 2px $black;
+      width: 20.625rem;
+      height: 7.625rem;
+      font-family: Montserrat;
+      font-weight: 700;
+      font-size: 1.25rem;
+      letter-spacing: 1.7px;
+      text-align: center;
+      color: #353535;
+      text-transform: uppercase;
+      background: none;
+      outline: none;
+      cursor: pointer;
+    }
+  }
+}
